@@ -3,6 +3,7 @@ This project is being developed in the Information Processing and Retrieval cour
 ## Dataset Links 
 - [Steam Games Dataset (approximately 70k lines)](https://www.kaggle.com/datasets/mexwell/steamgames)
 - [Steam Game Reviews Dataset (approximately 500k lines)](https://www.kaggle.com/datasets/andrewmvd/steam-reviews)
+- [Steam Game Genres](https://www.kaggle.com/datasets/danieliusv/steam-games-genres)
 
 ## Developed By
 -
