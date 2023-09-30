@@ -11,5 +11,5 @@ This project is being developed in the Information Processing and Retrieval cour
 ## Developed By
 -
 -
--
+- Marcelo Apolinário, up201603903@up.pt
 - Pedro Gomes, up202006086@up.pt
