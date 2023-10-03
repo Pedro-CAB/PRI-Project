@@ -10,6 +10,6 @@ This project is being developed in the Information Processing and Retrieval cour
 
 ## Developed By
 -
--
+- Rita Oliveira, up202004155@up.pt
 - Marcelo Apolinário, up201603903@up.pt
 - Pedro Gomes, up202006086@up.pt
