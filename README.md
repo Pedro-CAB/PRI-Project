@@ -9,7 +9,7 @@ This project is being developed in the Information Processing and Retrieval cour
 - [Overleaf Editable Report](https://www.overleaf.com/project/65158970b4dfdbdf08a7b83f)
 
 ## Developed By
--
+- Filipe Fonseca, up202003474@up.pt
 - Rita Oliveira, up202004155@up.pt
 - Marcelo Apolinário, up201603903@up.pt
 - Pedro Gomes, up202006086@up.pt
