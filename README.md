@@ -15,7 +15,10 @@ This project is being developed in the Information Processing and Retrieval cour
 - Marcelo Apolinário, up201603903@up.pt
 - Pedro Gomes, up202006086@up.pt
 
-## Makefile Instructions
+## Makefile Instructions  
+
+>Recommended to run this project in either a native Linux environment or a virtual machine with Linux
+
 1. Install the project's dependencies by running the command `make install` in the project's directory.
 2. To run all of the processes, use the command `make all`. Alternatively, the following specific targets can also be used:
    - `setup`: Install necessary libraries, contained in the *requirements.txt* file, into the project's virtual environment.
