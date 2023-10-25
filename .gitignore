@@ -1,0 +1,6 @@
+.venv/
+data/
+*.csv
+*.png
+*.dump.gz
+*.db
