@@ -15,7 +15,7 @@ refine: setup
 	./.venv/bin/python3 refine.py
 
 setup: requirements.txt
-	virtualenv .venv
+	python3 -m venv .venv
 	./.venv/bin/pip install -r requirements.txt
 
 install:

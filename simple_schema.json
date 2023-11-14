@@ -1,7 +1,7 @@
 {
-	"add-field-type": [
+    "add-field-type": [
         {
-            "name":"courseTitle",
+            "name":"hyphenWords",
             "class":"solr.TextField",
             "indexAnalyzer":{
                 "tokenizer":{
@@ -18,16 +18,37 @@
                 },
                 "filters":[
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
+                    {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.WordDelimiterGraphFilterFactory"}
                 ]
             }
         }
     ],
+
     "add-field": [
         {
-            "name": "title",
-            "type": "courseTitle",
-            "indexed": true
+            "name": "windows",
+            "type": "boolean"
+        },
+        {
+            "name": "linux",
+            "type": "boolean"
+        },
+        {
+            "name": "mac",
+            "type": "boolean"
+        },
+        {
+            "name": "name",
+            "type": "hyphenWords"
         }
-    ]
+        {
+            "name": "categories",
+            "type": "hyphenWords"
+        },
+        {
+            "name": "tags",
+            "type": "hyphenWords"
+        }
+    ],
 }
