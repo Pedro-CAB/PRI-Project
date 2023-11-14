@@ -32,4 +32,4 @@
    ```bash
       sh startup.sh
    ```
-3. Open this [link](localhost:8983) on a web browser (*localhost* on the default Solr port 8983).
+3. Open this [link](http://localhost:8983) on a web browser (*localhost* on the default Solr port 8983).
