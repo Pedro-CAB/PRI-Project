@@ -1,5 +1,8 @@
 .venv/
 data/
+original_data/
+refined_data/
+semantic_data/
 *.zip
 *.csv
 *.png

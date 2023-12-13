@@ -22,7 +22,15 @@
                     {"class":"solr.WordDelimiterGraphFilterFactory"}
                 ]
             }
+        },
+        {
+            "name": "gamesVector",
+            "class": "solr.DenseVectorField",
+            "vectorDimension": 384,
+            "similarityFunction": "cosine",
+            "knnAlgorithm": "hnsw"
         }
+
     ],
 
     "add-field": [
@@ -41,7 +49,7 @@
         {
             "name": "name",
             "type": "hyphenWords"
-        }
+        },
         {
             "name": "categories",
             "type": "hyphenWords"
@@ -49,6 +57,12 @@
         {
             "name": "tags",
             "type": "hyphenWords"
+        },
+        {
+            "name": "vector",
+            "type": "gamesVector",
+            "indexed": true,
+            "stored": true
         }
     ]
 }

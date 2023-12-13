@@ -3,3 +3,5 @@ matplotlib
 numpy
 nltk
 langdetect
+transformers
+sentence-transformers

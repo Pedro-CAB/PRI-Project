@@ -30,7 +30,7 @@ def create_table(connection, statement):
 
 
 def main():
-    database = r'database.db'
+    database = r'db/database.db'
 
     # create table creation statements
     sql_create_games_table = """
@@ -54,43 +54,21 @@ def main():
             categories      TEXT,
             genres          TEXT,
             tags            TEXT,
-            tokens          TEXT,
-            stemmed         TEXT
+            player_sentiment TEXT
         );
     """
-
-    sql_create_reviews_table = """
-        CREATE TABLE IF NOT EXISTS reviews (
-            review_id       INTEGER PRIMARY KEY,
-            app_id          INTEGER NOT NULL,
-            text            TEXT,
-            score           INTEGER,
-            votes           INTEGER,
-            FOREIGN KEY (app_id)
-                REFERENCES games (app_id)
-        );
-    """
-
     # create database connection
     connection = create_connection(database)
     print("Database: Database connection established.")
 
     # create tables
     create_table(connection, sql_create_games_table)
-    create_table(connection, sql_create_reviews_table)
-    print("Database: Tables created.")
 
     # add data
-    games_df = pd.read_csv('refined_games.csv')
+    games_df = pd.read_csv('refined_data/final_games.csv')
     cursor = connection.execute('SELECT * FROM games')
     games_cols = [description[0] for description in cursor.description]
     games_df[games_cols].to_sql('games', connection, if_exists='append', index=False)
-    
-    games_reviews_df = pd.read_csv('refined_games_reviews.csv')
-    cursor = connection.execute('SELECT * FROM reviews')
-    reviews_cols = [description[0] for description in cursor.description]
-    games_reviews_df[reviews_cols].to_sql('reviews', connection, if_exists='append', index=False)
-    print("Database: Tables populated.")
 
     print("Database: Database created successfully!")
 

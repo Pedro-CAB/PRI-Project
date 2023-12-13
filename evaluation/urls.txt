@@ -1,0 +1,9 @@
+Q1 - Indie games where you can control a robot
+    no boost - http://localhost:8983/solr/games/select?fq=tags%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20a%20robot%22&useParams=
+    boost - http://localhost:8983/solr/games/select?fq=tags%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20a%20robot%22~5&useParams=
+
+Q2 - Shooter games about war and history 
+    no boost - http://localhost:8983/solr/#/games/query?q=about_info:war%20OR%20about_info:history&q.op=OR&indent=true&fq=tags:shooter&fq=windows:1&useParams=&qt=
+    boost - http://localhost:8983/solr/#/games/query?q=about_info:war%5E2%20OR%20about_info:hist*&q.op=OR&indent=true&fq=tags:shooter&fq=windows:1&useParams=&qt=
+
+Q3 - 

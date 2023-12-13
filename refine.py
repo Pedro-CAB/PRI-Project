@@ -1,17 +1,14 @@
 import pandas as pd
-import nltk
 from langdetect import detect
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-
-nltk.download('punkt')
-nltk.download('stopwords')
+from transformers import pipeline
 
 # Fetch datasets
-games_df = pd.read_csv("games.csv")
-games_genres_df = pd.read_csv("games_genres.csv")
-games_reviews_df = pd.read_csv("games_reviews.csv")
+games_df = pd.read_csv("original_data/games.csv")
+games_genres_df = pd.read_csv("original_data/games_genres.csv")
+games_reviews_df = pd.read_csv("original_data/games_reviews.csv")
 games_reviews_df.rename(columns={"app_id": "AppID"}, inplace=True)
 
 # Finds games with no reviews and returns the games_df without those games
@@ -95,16 +92,17 @@ games_df.rename(columns={
     "Achievements": "achievements", "Recommendations": "recommendations",
     "Developers": "developers", "Publishers": "publishers",
     "Categories": "categories", "Genres": "genres", "Tags": "tags",
-    "Tokens": "tokens", "Stemmed": "stemmed"}, inplace=True)
+    "Tokens": "tokens", "Stemmed": "stemmed"
+    }, inplace=True)
 print("\t- Renamed columns")
 
 # Save the refined dataset
-games_df.to_csv("refined_games.csv", index=False)
+games_df.to_csv("refined_data/refined_games.csv", index=False)
 print("Refinement: Refined games table")
 
 ### Refine game genres table
 print("Refinement: Refining game genres table...")
-games_genres_df.to_csv("refined_games_genres.csv", index=False)
+games_genres_df.to_csv("refined_data/refined_games_genres.csv", index=False)
 print("Refinement: Refined game genres table")
 
 ### Refine game reviews table
@@ -131,5 +129,5 @@ games_reviews_df.rename(columns={
 print("\t- Renamed columns")
 
 # Save the refined dataset
-games_reviews_df.to_csv("refined_games_reviews.csv", index=False)
+games_reviews_df.to_csv("refined_data/refined_games_reviews.csv", index=False)
 print("Refinement: Refined game reviews")

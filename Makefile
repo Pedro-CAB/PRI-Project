@@ -26,10 +26,10 @@ clean_all: clean
 
 clean_not_needed:
 	rm -rf __pycache__
-	rm -f refined_*.csv
+	rm -f refined_data/refined_*.csv
 
 clean:
 	rm -rf __pycache__
-	rm -f refined_*.csv *.png database.dump.gz database.db
+	rm -f refined_data/refined_*.csv images/*.png database.dump.gz db/database.db
 
 .PHONY: clean clean_not_needed clean_all setup refine plot database run install
