@@ -16,15 +16,15 @@ def plot_games_release_dates():
     games_df = pd.read_csv("refined_data/refined_games.csv")
 
     # Convert data type to 'int' and keep only the release year
-    games_df["release_date"] = pd.to_datetime(games_df["release_date"], format='mixed').dt.strftime('%Y').astype('int64')
+    games_df["Release date"] = pd.to_datetime(games_df["Release date"], format='mixed').dt.strftime('%Y').astype('int64')
 
     # Create series to plot
-    min_year = games_df["release_date"].min()
+    min_year = games_df["Release date"].min()
     #max_year = games_df["Release date"].max()
-    release_year_series = games_df.groupby(pd.cut(games_df["release_date"], np.arange(min_year, 2023, 3)), observed=False).count()["app_id"]
+    release_year_series = games_df.groupby(pd.cut(games_df["Release date"], np.arange(min_year, 2023, 3)), observed=False).count()["AppID"]
 
     # Configure plot
-    plt.rcParams.update({"font.size": 18})
+    plt.rcParams.update({"font.size": 40})
     plt.ylabel("No. of Games")
     plt.title("Games released per year")
 
