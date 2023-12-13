@@ -9,4 +9,5 @@ curl -X POST -H 'Content-type:application/json' \
     http://localhost:8983/solr/games/schema
 
 # Populate collection using mapped path inside container.
-docker exec -it pri_solr bin/post -c games /data/data
+docker exec -it pri_solr bin/post -c games /data/semantic_data
+# docker exec -it pri_solr bin/post -c games /data/evaluation/subset.json

@@ -22,7 +22,56 @@
                     {"class":"solr.WordDelimiterGraphFilterFactory"}
                 ]
             }
+        },
+        {
+            "name": "text-syn",
+            "class": "solr.TextField",
+            "positionIncrementGap": "100",
+            "multiValued": true,
+            "indexAnalyzer": {
+                "tokenizer": {
+                    "class": "solr.StandardTokenizerFactory"
+                },
+                "filters": [
+                    {
+                        "class": "solr.LowerCaseFilterFactory"
+                    },
+                    {
+                        "class": "solr.ASCIIFoldingFilterFactory"
+                    }
+                ]
+            },
+            "queryAnalyzer": {
+                "tokenizer": {
+                    "class": "solr.StandardTokenizerFactory"
+                },
+                "filters": [
+                    {
+                      "class": "solr.SynonymFilterFactory",
+                      "synonyms": "synonyms.txt",  
+                      "ignoreCase": "true"
+                    },
+                    {
+                        "class": "solr.LowerCaseFilterFactory"
+                    },
+                    {
+                        "class": "solr.ASCIIFoldingFilterFactory"
+                    }
+                ]
+            },
+            "similarity": {
+              "class": "solr.LMDirichletSimilarityFactory",
+              "mu": 500
+            }
+        },
+        {
+            "name": "gamesVector",
+            "class": "solr.DenseVectorField",
+            "vectorDimension": 384,
+            "similarityFunction": "cosine",
+            "knnAlgorithm": "hnsw"
         }
+
     ],
 
     "add-field": [
@@ -39,9 +88,13 @@
             "type": "boolean"
         },
         {
+            "name": "about_info",
+            "type": "text-syn"
+        },
+        {
             "name": "name",
             "type": "hyphenWords"
-        }
+        },
         {
             "name": "categories",
             "type": "hyphenWords"
@@ -49,6 +102,12 @@
         {
             "name": "tags",
             "type": "hyphenWords"
+        },
+        {
+            "name": "vector",
+            "type": "gamesVector",
+            "indexed": true,
+            "stored": true
         }
     ]
 }

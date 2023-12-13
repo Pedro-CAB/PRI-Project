@@ -13,7 +13,7 @@ pd.set_option("display.max_rows", None)
 
 def plot_games_release_dates():
     # Read .csv
-    games_df = pd.read_csv("games.csv")
+    games_df = pd.read_csv("refined_data/refined_games.csv")
 
     # Convert data type to 'int' and keep only the release year
     games_df["Release date"] = pd.to_datetime(games_df["Release date"], format='mixed').dt.strftime('%Y').astype('int64')
@@ -33,14 +33,14 @@ def plot_games_release_dates():
 
     # Save plot as an image file
     fig = plt.gcf()
-    fig.set_size_inches(22.5, 25)
-    fig.savefig('games_released_per_year.png')
+    fig.set_size_inches(22.5, 18.5)
+    fig.savefig('images/games_released_per_year.png')
     plt.clf()
 
 
 def plot_games_by_genre():
     # Read .csv
-    game_genres_df = pd.read_csv("refined_games_genres.csv")
+    game_genres_df = pd.read_csv("refined_data/refined_games_genres.csv")
 
     # Create series to plot
     games_genre_series = game_genres_df.groupby(game_genres_df["Genre"]).count()['appid']
@@ -77,7 +77,7 @@ def plot_games_by_genre():
     # Save plot as an image
     fig = plt.gcf()
     fig.set_size_inches(18.5, 10.5)
-    fig.savefig("game_genres.png")
+    fig.savefig("images/game_genres.png")
     plt.clf()
 
 

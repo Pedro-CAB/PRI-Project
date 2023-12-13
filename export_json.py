@@ -17,9 +17,9 @@ def fetch_games(connection):
     return games
     
 
-def fetch_game_reviews(connection, app_id):
-    query = """SELECT * from reviews WHERE app_id = ?"""
-    cursor = connection.execute(query, (app_id,))
+def fetch_game_reviews(connection):
+    query = """SELECT * from reviews"""
+    cursor = connection.execute(query)
     result = cursor.fetchall()
 
     reviews = []
@@ -33,17 +33,16 @@ def fetch_game_reviews(connection, app_id):
 
 
 try:
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect('db/database.db')
     connection.row_factory = sqlite3.Row
     print("Export: Database connection established")
 
     data = list()
     file_num = 0
     games = fetch_games(connection)
-    print("Export: Joining movies in JSON format...")
+    print("Export: Joining in JSON format...")
 
     for game in games:
-        #game["reviews"] = fetch_game_reviews(connection, game["app_id"])
         data.append(game)
         
         if len(data) >= MAX_DATA_SIZE:
