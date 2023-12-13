@@ -2,36 +2,29 @@
   <section class="search-page">
         <img src="@/assets/steamhunter-logo.png" alt="SteamHunter Logo" class="steamhunter-logo">
         <h1 class="logo-text">SteamHunter</h1>
-        <h2 class="logo-text">Standard Search</h2>
+
           <div class="search-container">
             <div class="search-form" id="name-form">
-              <input v-model="standard" @input="search" class="search-bar" placeholder="Search for a Videogame!">
+              <input v-model="query" @input="search" class="search-bar" placeholder="Search for a Videogame!">
             </div>
           </div>
-        <h2 class="logo-text">Advanced Search</h2>
         <div class="search-container">
-          <div class="search-form" id="name">
-            <input v-model="name" @input="search" class="search-bar" placeholder="Name">
-          </div>
-          <div class="search-form" id="genres-categories">
-            <input v-model="genres" @input="search" class="search-bar" placeholder="Genre">
-            <input v-model="categories" @input="search" class="search-bar" placeholder="Category">
-          </div>
-          <div class="search-form" id="language">
-            <input v-model="languages" @input="search" class="search-bar" placeholder="Language">
-          </div>
-          <div class="search-form" id="developers-publishers">
-            <input v-model="developers" @input="search" class="search-bar" placeholder="Developer">
-            <input v-model="publishers" @input="search" class="search-bar" placeholder="Publisher">
-          </div>
           <div class="rows-form" id="rows-button">
             <input v-model="rows" @input="search" class="search-bar" placeholder="Nº Results">
             <button @click="searchSolr()" class="search-button">
               <img src="@/assets/searchIcon.png" alt="Search Icon" class="search-icon">
             </button>
-            <button @click="redirectToResults">Go to Results</button>
           </div>
         </div>
+      </section>
+      <div v-if="this.$data['response'].length === 0" class="results"></div>
+      <section v-else>
+        <table class="results">
+          <tr><th>Name</th><th>About the Game</th><th>Positive Reviews</th><th>Negative Reviews</th><th>Recommendations</th></tr>
+          <tr v-for="doc in this.$data['documents']">
+            <td>{{doc['name']}}</td><td>{{abbreviateText(doc['about_info'][0],400)}}</td><td>{{doc['positive'][0]}}</td><td>{{doc['negative'][0]}}</td><td>{{doc['recommendations'][0]}}</td>
+          </tr>
+        </table>
       </section>
 </template>
 
@@ -41,53 +34,29 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      name: '',
-      genres: '',
-      categories: '',
-      languages: '',
-      developers: '',
-      publishers: '',
-      tags: '',
       rows: 10,
-      standard: '',
+      query: '',
+      response: [],
+      documents: [],
     };
   },
   methods: {
     async searchSolr() {
-      let query = '';
-      let first = true;
-      if(this.$data['standard']){
-        query = 'name:' + this.$data['standard'] + ',\nabout_info:' + this.$data['standard'] + ',\ntags:' + this.$data['standard'];
-      }
-      else{
-        for (const key in this.$data) {
-        if (first && this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows' && key != 'standard'){
-          query = `${key}:${this.$data[key]}`;
-          first = false;
-        }
-        else if (this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows' && key != 'standard') {
-          query += `,\n${key}:${this.$data[key]}`;
-        }
-      }
-      }
-      console.log("Query: " + query)
-      console.log("Rows: " + this.$data['rows'])
+      //console.log("Query: " + this.$data['query'])
+      //console.log("Rows: " + this.$data['rows'])
       try {
         const solrEndpoint = 'http://localhost:8983/solr/games/select?';
         const response = await axios.get(solrEndpoint, {
           params: {
-            q: query,
+            q: 'name:' + this.$data['query'] + ',\nabout_info:' + this.$data['query'],
             rows: this.$data['rows'],
           },
-        }
-        );
+        });
+        this.$data['response'] = response;
+        this.$data['documents'] = response.data['response']['docs'];
         // Handle the Solr response
         console.log('Solr Response:', response.data);
-        // Redirect to the result page with the response data
-        this.$router.push({
-          name: 'result',
-          params: { responseData: response.data },
-        });
+        console.log('Solr Documents:', response.data['response']['docs'])
       } catch (error) {
         console.error('Error making Solr request:', error);
         if (error.response) {
@@ -102,12 +71,9 @@ export default {
         }
       }
     },
-    redirectToResults() {
-      // Assuming you have some data to send, let's say an ID
-      const id = 123; // Replace with your actual data
-
-      // Use router.push to navigate to the destination page with data
-      this.$router.push({ name: 'result', params: { id } });
+    abbreviateText(text,length) {
+      let newText = text.substr(0,length) + '...'
+      return newText;
     },
   },
 };
@@ -190,5 +156,42 @@ input {
   align-items: center;
   justify-content: center;
   flex-direction: line;
+}
+
+.results {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+}
+
+.results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.results th, .results td {
+  border: 1px solid #4a90e2;
+  padding: 10px;
+}
+
+.results th {
+  background-color: #4a90e2;
+  color: #fff;
+  font-weight: bold;
+}
+
+.results td {
+  background-color: #1e2a38;
+  color: #fff;
+}
+
+.results tr:nth-child(even) td {
+  background-color: #233040;
+}
+
+.results tr:hover td {
+  background-color: #33455e;
 }
 </style>

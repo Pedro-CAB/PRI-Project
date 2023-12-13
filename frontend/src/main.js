@@ -4,6 +4,4 @@ import router from './router'; // Import the router configuration
 
 const app = createApp(App);
 
-app.use(router);
-
 app.mount('#app');

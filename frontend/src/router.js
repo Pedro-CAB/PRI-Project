@@ -7,9 +7,9 @@ const app = createApp(App);
 
 const routes = [
   {
-    path: '/result/:id',
-    name: 'result',
-    component: () => import('./ResultPage.vue'),
+    path: '/',
+    name: 'home',
+    component: () => import('./App.vue'),
   },
 ];
 
