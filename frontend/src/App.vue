@@ -1,7 +1,5 @@
 <template>
-  <div class="search-page">
-    <div class="outer-container">
-      <div class="inner-container">
+  <section class="search-page">
         <img src="@/assets/steamhunter-logo.png" alt="SteamHunter Logo" class="steamhunter-logo">
         <h1 class="logo-text">SteamHunter</h1>
         <h2 class="logo-text">Standard Search</h2>
@@ -31,11 +29,10 @@
             <button @click="searchSolr()" class="search-button">
               <img src="@/assets/searchIcon.png" alt="Search Icon" class="search-icon">
             </button>
+            <button @click="redirectToResults">Go to Results</button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
 </template>
 
 <script>
@@ -60,17 +57,15 @@ export default {
       let query = '';
       let first = true;
       if(this.$data['standard']){
-        this.$data['name'] = this.$data['standard']
-        this.$data['about_info'] = this.$data['standard']
-        this.$data['tags'] = this.$data['standard']
+        query = 'name:' + this.$data['standard'] + ',\nabout_info:' + this.$data['standard'] + ',\ntags:' + this.$data['standard'];
       }
       else{
         for (const key in this.$data) {
-        if (first && this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows'){
+        if (first && this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows' && key != 'standard'){
           query = `${key}:${this.$data[key]}`;
           first = false;
         }
-        else if (this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows') {
+        else if (this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows' && key != 'standard') {
           query += `,\n${key}:${this.$data[key]}`;
         }
       }
@@ -88,6 +83,11 @@ export default {
         );
         // Handle the Solr response
         console.log('Solr Response:', response.data);
+        // Redirect to the result page with the response data
+        this.$router.push({
+          name: 'result',
+          params: { responseData: response.data },
+        });
       } catch (error) {
         console.error('Error making Solr request:', error);
         if (error.response) {
@@ -102,6 +102,13 @@ export default {
         }
       }
     },
+    redirectToResults() {
+      // Assuming you have some data to send, let's say an ID
+      const id = 123; // Replace with your actual data
+
+      // Use router.push to navigate to the destination page with data
+      this.$router.push({ name: 'result', params: { id } });
+    },
   },
 };
 </script>
@@ -111,27 +118,17 @@ export default {
 .search-page {
   background-color: #171a21;
   color: #fff;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-}
-
-.outer-container {
-  display: flex;
-  justify-content: center;
-}
-
-.inner-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 80%; /* Set height to full viewport height */
+  width: 100%;
 }
 
 .steamhunter-logo {
   width: 150px;
-  height: auto;
+  height: 150px;
 }
 
 .logo-text {
@@ -172,14 +169,14 @@ export default {
 
 .search-icon {
   width: 20px;
-  height: auto;
+  height: 20px;
 }
 
 input {
   margin-left: 10px;
   margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom:5px;
+  margin-top: auto;
+  margin-bottom:auto;
 }
 
 #genres-categories input, #developers-publishers input {
