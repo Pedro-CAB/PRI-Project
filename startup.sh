@@ -10,3 +10,4 @@ curl -X POST -H 'Content-type:application/json' \
 
 # Populate collection using mapped path inside container.
 docker exec -it pri_solr bin/post -c games /data/semantic_data
+# docker exec -it pri_solr bin/post -c games /data/evaluation/subset.json

@@ -16,16 +16,17 @@ def save_json(file_path, data):
 # Get the current script directory
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
-# Specify the data directory path (located at the same level as 'evaluation')
-data_dir = os.path.join(script_dir, '..', 'data')
+# Specify the data directory path
+data_dir = os.path.join(script_dir, '..', 'semantic_data')
+eval_dir = os.path.join(script_dir, '..', 'evaluation')
 
 # List to store data from all files
 all_data = []
 
 # Load data from each file in the data directory
 for i in range(4):
-    file_path = os.path.join(data_dir, f'data{i}.json')
-    print(f"Attempting to load file: {file_path}")  # Add this line
+    file_path = os.path.join(data_dir, f'data{i}_semantic.json')
+    print(f"Attempting to load file: {file_path}")
     data = load_json(file_path)
     all_data.extend(data)
 
@@ -36,7 +37,7 @@ random.shuffle(all_data)
 subset_data = all_data[:100]
 
 # Specify the subset file path
-subset_file_path = os.path.join(script_dir, 'subset.json')
+subset_file_path = os.path.join(eval_dir, 'subset.json')
 
 # Save the subset to a new file called subset.json
 save_json(subset_file_path, subset_data)

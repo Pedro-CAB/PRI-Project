@@ -1,9 +1,11 @@
 Q1 - Indie games where you can control a robot
-    no boost - http://localhost:8983/solr/games/select?fq=tags%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20a%20robot%22&useParams=
-    boost - http://localhost:8983/solr/games/select?fq=tags%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20a%20robot%22~5&useParams=
+    boost(phrase match) - http://localhost:8983/solr/games/select?fq=genres%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20a%20robot%22&useParams=
+    boost(proximity) - http://localhost:8983/solr/games/select?fq=genres%3Aindie&indent=true&q.op=OR&q=about_info%3A%22control%20robot%22~5&useParams=
 
 Q2 - Shooter games about war and history 
-    no boost - http://localhost:8983/solr/#/games/query?q=about_info:war%20OR%20about_info:history&q.op=OR&indent=true&fq=tags:shooter&fq=windows:1&useParams=&qt=
-    boost - http://localhost:8983/solr/#/games/query?q=about_info:war%5E2%20OR%20about_info:hist*&q.op=OR&indent=true&fq=tags:shooter&fq=windows:1&useParams=&qt=
+    no boost - http://localhost:8983/solr/games/select?fq=tags%3Ashooter&fq=windows%3A1&indent=true&q.op=OR&q=about_info%3Awar%20OR%20about_info%3Ahistory&useParams=
+    boost - http://localhost:8983/solr/games/select?fq=tags%3Ashooter&fq=windows%3A1&indent=true&q.op=OR&q=about_info%3Awar%20OR%20about_info%3Ahist*%5E2&useParams=
 
-Q3 - 
+Q3 - Most expensive and hated games by the players 
+    no boost - http://localhost:8983/solr/games/select?indent=true&q.op=OR&q=player_sentiment%3A(sadness%20disgust%20anger)&sort=price%20desc%2C%20recommendations%20asc&useParams=
+    boost(term boost) -http://localhost:8983/solr/games/select?indent=true&q.op=OR&q=player_sentiment%3Asadness%0Aplayer_sentiment%3Adisgust%5E5%0Aplayer_sentiment%3Aanger%5E10&sort=price%20desc%2C%20recommendations%20asc&useParams=

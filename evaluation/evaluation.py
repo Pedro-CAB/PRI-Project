@@ -6,8 +6,8 @@ import json
 import requests
 import pandas as pd
 
-QRELS_FILE = "qrels/qrels_q1.txt"
-QUERY_URL = "http://localhost:8983/solr/games/select?indent=true&q.op=OR&q=about_info%3A%22control%20robot%22~5&useParams="
+QRELS_FILE = "qrels/qrels_q3.txt"
+QUERY_URL = "http://localhost:8983/solr/games/select?indent=true&q.op=OR&q=player_sentiment%3Asadness%0Aplayer_sentiment%3Adisgust%5E5%0Aplayer_sentiment%3Aanger%5E10&sort=price%20desc%2C%20recommendations%20asc&useParams="
 
 # Read qrels to extract relevant documents
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
@@ -40,6 +40,11 @@ def ap(results, relevant):
 
 @metric
 def p10(results, relevant, n=10):
+    """Precision at N"""
+    return len([doc for doc in results[:n] if str(doc['app_id'][0]) in relevant])/n
+
+@metric
+def p5(results, relevant, n=5):
     """Precision at N"""
     return len([doc for doc in results[:n] if str(doc['app_id'][0]) in relevant])/n
 
