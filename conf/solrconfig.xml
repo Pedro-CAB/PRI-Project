@@ -1,0 +1,11 @@
+<config>
+
+  <requestHandler name="/select" class="solr.SearchHandler">
+
+    <lst name="defaults">
+
+      <str name="headers">Access-Control-Allow-Origin:*</str>
+    </lst>
+  </requestHandler>
+
+</config>

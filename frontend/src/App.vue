@@ -1,31 +1,114 @@
 <template>
-<v-app>
   <div class="search-page">
     <div class="outer-container">
       <div class="inner-container">
         <img src="@/assets/steamhunter-logo.png" alt="SteamHunter Logo" class="steamhunter-logo">
         <h1 class="logo-text">SteamHunter</h1>
+        <h2 class="logo-text">Standard Search</h2>
+          <div class="search-container">
+            <div class="search-form" id="name-form">
+              <input v-model="standard" @input="search" class="search-bar" placeholder="Search for a Videogame!">
+            </div>
+          </div>
+        <h2 class="logo-text">Advanced Search</h2>
         <div class="search-container">
-          <input v-model="searchQuery" @input="search" class="search-bar" placeholder="Search in SteamHunter">
-          <button @click="search" class="search-button">
-            <img src="@/assets/searchIcon.png" alt="Search Icon" class="search-icon">
-          </button>
+          <div class="search-form" id="name">
+            <input v-model="name" @input="search" class="search-bar" placeholder="Name">
+          </div>
+          <div class="search-form" id="genres-categories">
+            <input v-model="genres" @input="search" class="search-bar" placeholder="Genre">
+            <input v-model="categories" @input="search" class="search-bar" placeholder="Category">
+          </div>
+          <div class="search-form" id="language">
+            <input v-model="languages" @input="search" class="search-bar" placeholder="Language">
+          </div>
+          <div class="search-form" id="developers-publishers">
+            <input v-model="developers" @input="search" class="search-bar" placeholder="Developer">
+            <input v-model="publishers" @input="search" class="search-bar" placeholder="Publisher">
+          </div>
+          <div class="rows-form" id="rows-button">
+            <input v-model="rows" @input="search" class="search-bar" placeholder="Nº Results">
+            <button @click="searchSolr()" class="search-button">
+              <img src="@/assets/searchIcon.png" alt="Search Icon" class="search-icon">
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</v-app>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      name: '',
+      genres: '',
+      categories: '',
+      languages: '',
+      developers: '',
+      publishers: '',
+      tags: '',
+      rows: 10,
+      standard: '',
+    };
+  },
+  methods: {
+    async searchSolr() {
+      let query = '';
+      let first = true;
+      if(this.$data['standard']){
+        this.$data['name'] = this.$data['standard']
+        this.$data['about_info'] = this.$data['standard']
+        this.$data['tags'] = this.$data['standard']
+      }
+      else{
+        for (const key in this.$data) {
+        if (first && this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows'){
+          query = `${key}:${this.$data[key]}`;
+          first = false;
+        }
+        else if (this.$data.hasOwnProperty(key) && this.$data[key] !== '' && key != 'rows') {
+          query += `,\n${key}:${this.$data[key]}`;
+        }
+      }
+      }
+      console.log("Query: " + query)
+      console.log("Rows: " + this.$data['rows'])
+      try {
+        const solrEndpoint = 'http://localhost:8983/solr/games/select?';
+        const response = await axios.get(solrEndpoint, {
+          params: {
+            q: query,
+            rows: this.$data['rows'],
+          },
+        }
+        );
+        // Handle the Solr response
+        console.log('Solr Response:', response.data);
+      } catch (error) {
+        console.error('Error making Solr request:', error);
+        if (error.response) {
+          console.log('Error response from Solr:', error.response.data);
+          console.log('Status code:', error.response.status);
+          console.log('Headers:', error.response.headers);
+        } else if (error.request) {
+          console.log('No response received from Solr. Request made but no response received.');
+          console.log('Request details:', error.request);
+        } else {
+          console.log('Error setting up the Solr request:', error.message);
+        }
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 
-v-app{
-  align:center;
-  display:flex;
-}
-
 .search-page {
-  position: relative;
   background-color: #171a21;
   color: #fff;
   display: flex;
@@ -35,18 +118,7 @@ v-app{
   width: 100vw;
 }
 
-.background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5; /* Adjust the opacity as desired */
-}
-
-.outer-container .search-page {
+.outer-container {
   display: flex;
   justify-content: center;
 }
@@ -101,5 +173,25 @@ v-app{
 .search-icon {
   width: 20px;
   height: auto;
+}
+
+input {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom:5px;
+}
+
+#genres-categories input, #developers-publishers input {
+  width: 190px;
+  align-items: center;
+  justify-content: center;
+}
+
+#rows-button input, #rows-button button {
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: line;
 }
 </style>
