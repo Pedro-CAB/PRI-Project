@@ -1,0 +1,169 @@
+fps, first person shooter, first-person shooter
+rpg, role playing game, role-playing game
+mmo, massively multiplayer online, MMORPG, MMO RPG
+rts, real time strategy, real-time strategy
+indie, independent, independent game
+sandbox, open world, free roam
+strategy, strategic, tactical
+simulation, simulator, sim
+adventure, exploration, narrative
+racing, race, driving, racer
+platformer, platform game, side-scroller
+puzzle, brain teaser, problem
+survival, survival game, survival horror
+sports, sport game, athletic game
+fighting, brawler, combat game
+stealth, sneaking game, infiltration
+horror, scary game, spooky game
+arcade, arcade game, arcade style
+roguelike, rogue-lite, procedural death labyrinth
+vr, virtual reality, VR game
+mobile, mobile game, smartphone game
+console, console game, video game console
+pc, personal computer, computer game
+multiplayer, multi-player, online multiplayer
+singleplayer, single-player, offline game
+coop, cooperative, co-op
+competitive, pvp, player versus player
+e-sports, electronic sports, competitive gaming
+retro, classic game, old school game
+action, action game, fast-paced game
+card, card game, collectible card game
+board, board game, tabletop game
+educational, learning game, edutainment
+casual, casual game, light game
+music, rhythm game, music game
+narrative, story-driven, story based
+free to play, f2p, free game
+pay to play, p2p, subscription-based game
+downloadable content, DLC, expansion pack
+early access, beta access, pre-release
+mod, modification, fan-made
+cross-platform, multi-platform, platform independent
+physics, physics-based, physics game
+turn-based, turn based, strategy
+online, internet game, networked game
+local multiplayer, local co-op, split-screen
+pixel art, pixelated, retro graphics
+3d, three-dimensional, 3D game
+2d, two-dimensional, 2D game
+controller support, gamepad support, joystick support
+loot, treasure, items, gear
+quest, mission, objective, task
+grinding, farming, leveling up, progressing
+boss, boss fight, end-level enemy, big bad
+checkpoint, save point, progress marker
+cutscene, cinematic, story clip
+dialogue, conversation, speech
+difficulty, challenge level, game difficulty
+endgame, late game, final stages
+hit points, hp, health, life
+inventory, backpack, items, gear
+level up, gain level, upgrade
+mana, magic points, spell points, energy
+npc, non-player character, AI character
+open world, sandbox, free roam
+party, team, group
+quest giver, mission provider, task giver
+raid, group mission, large-scale quest
+respawn, rebirth, come back to life
+save game, save progress, game save
+skill tree, abilities chart, talents
+spawn, appear, generate
+speedrun, fast playthrough, quick completion
+tutorial, training session, beginner's guide
+weapon, armament, gear
+achievement, trophy, reward
+cooldown, recovery time, delay
+crafting, building, making
+emote, gesture, animation
+guild, clan, group
+hitbox, collision box, target area
+lag, delay, latency
+modder, modifier, customizer
+screenshot, screen capture, image
+side quest, optional mission, side mission
+streamer, broadcaster, game caster
+trailer, preview, teaser
+voice chat, audio communication, voice conversation
+walkthrough, guide, tutorial
+world map, game map, map
+xp, experience points, experience
+loot, treasure, items, gear
+quest, mission, objective, task
+grinding, farming, leveling up, progressing
+boss, boss fight, end-level enemy, big bad
+checkpoint, save point, progress marker
+cutscene, cinematic, story clip
+dialogue, conversation, speech
+difficulty, challenge level, game difficulty
+endgame, late game, final stages
+hit points, hp, health, life
+inventory, backpack, items, gear
+level up, gain level, upgrade
+mana, magic points, spell points, energy
+npc, non-player character, AI character
+open world, sandbox, free roam
+party, team, group
+quest giver, mission provider, task giver
+raid, group mission, large-scale quest
+respawn, rebirth, come back to life
+save game, save progress, game save
+skill tree, abilities chart, talents
+spawn, appear, generate
+speedrun, fast playthrough, quick completion
+tutorial, training session, beginner's guide
+weapon, armament, gear
+achievement, trophy, reward
+cooldown, recovery time, delay
+crafting, building, making
+emote, gesture, animation
+guild, clan, group
+hitbox, collision box, target area
+lag, delay, latency
+modder, modifier, customizer
+puzzle, brain teaser, problem
+screenshot, screen capture, image
+side quest, optional mission, side mission
+streamer, broadcaster, game caster
+trailer, preview, teaser
+voice chat, audio communication, voice conversation
+walkthrough, guide, tutorial
+world map, game map, map
+xp, experience points, experience
+avatar, character, player model, in-game representation
+battle royale, last man standing, survival game
+beta, test version, pre-release version
+buff, power-up, enhancement, boost
+clipping, texture glitch, graphical glitch
+controller, gamepad, joystick, input device
+crafting system, item creation, resource management
+cut content, removed content, unused features
+dev, developer, game designer
+early access, pre-release, alpha
+esports, competitive gaming, professional gaming
+farm, resource gathering, grinding
+game engine, development platform, rendering engine
+hit detection, collision detection, hit registration
+isometric, top-down view, 2.5D perspective
+jump scare, sudden scare, shock moment
+kickstarter, crowdfunding, fan-funded
+lag spike, connection drop, performance drop
+microtransaction, in-game purchase, DLC
+modding community, user-generated content, fan creations
+nerf, weaken, reduce power
+NPC dialogue, character speech, scripted lines
+permadeath, permanent death, one-life gameplay
+pixel graphics, 8-bit style, retro style
+procedural generation, random generation, dynamic creation
+quick time event, QTE, interactive sequence
+remaster, remake, re-release
+RNG, random number generator, luck factor
+season pass, DLC bundle, expansion pack
+speed buff, movement boost, quickness enhancement
+streaming, live gaming, online broadcasting
+tank, heavy character, damage absorber
+triple-A, AAA, high-budget game
+unlockable, hidden item, bonus content
+victory royale, winning, first place
+zombie mode, undead survival, horror survival
