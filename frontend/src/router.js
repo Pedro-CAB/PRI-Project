@@ -7,7 +7,7 @@ const app = createApp(App);
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: () => import('./App.vue'),
   },

@@ -20,9 +20,18 @@
       <div v-if="this.$data['response'].length === 0" class="results"></div>
       <section v-else>
         <table class="results">
-          <tr><th>Name</th><th>About the Game</th><th>Positive Reviews</th><th>Negative Reviews</th><th>Recommendations</th></tr>
+          <tr><th>Name</th>
+            <th>About the Game</th>
+            <th>Public Reviews</th>
+            <th>Price</th>
+            <th>Sentiment</th>
+          </tr>
           <tr v-for="doc in this.$data['documents']">
-            <td>{{doc['name']}}</td><td>{{abbreviateText(doc['about_info'][0],400)}}</td><td>{{doc['positive'][0]}}</td><td>{{doc['negative'][0]}}</td><td>{{doc['recommendations'][0]}}</td>
+            <td>{{doc['name'][0]}}</td>
+            <td>{{abbreviateText(doc['about_info'][0],400) + "(Developed by " + doc['developers'][0] + " and published by " + doc['publishers'][0] + ")"}}</td>
+            <td>{{doc['positive'][0] + " liked it, " + doc['negative'][0] + ' disliked it and ' + doc['recommendations'][0] + ' recommend it.'}}</td>
+            <td>{{doc['price'][0]}}$</td>
+            <td>{{doc['player_sentiment'][0]}}</td>
           </tr>
         </table>
       </section>
@@ -48,15 +57,16 @@ export default {
         const solrEndpoint = 'http://localhost:8983/solr/games/select?';
         const response = await axios.get(solrEndpoint, {
           params: {
-            q: 'name:' + this.$data['query'] + ',\nabout_info:' + this.$data['query'],
+            q: 'name:' + this.$data['query'] + ',\nabout_info:' + this.$data['query']+ ',\ngenres:' + this.$data['query']+ ',\ncategories:' + this.$data['query']+ ',\nplayer_sentiment:' + this.$data['query'] + ',\nlanguages:' + this.$data['query'] + ',\ndevelopers:' + this.$data['query'] + ',\npublishers:' + this.$data['query'],
             rows: this.$data['rows'],
           },
         });
+        //this.$data['response'] = this.runSemantic();
         this.$data['response'] = response;
         this.$data['documents'] = response.data['response']['docs'];
         // Handle the Solr response
         console.log('Solr Response:', response.data);
-        console.log('Solr Documents:', response.data['response']['docs'])
+        //console.log('Solr Documents:', response.data['response']['docs'])
       } catch (error) {
         console.error('Error making Solr request:', error);
         if (error.response) {
@@ -75,6 +85,83 @@ export default {
       let newText = text.substr(0,length) + '...'
       return newText;
     },
+    initializeBrython() {
+      // Dynamically create a script tag to load Brython
+      const brythonScript = document.createElement('script');
+      brythonScript.type = 'text/javascript';
+      brythonScript.src = './brython/brython/data/brython.js';
+      document.head.appendChild(brythonScript);
+
+      // Wait for Brython to load, then run your Python script
+      brythonScript.onload = () => {
+        this.runSemantic();
+      };
+    },
+    runSemantic() {
+      // Your Python script code
+      const pythonScript = `
+      import requests
+from sentence_transformers import SentenceTransformer
+
+def text_to_embedding(text):
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    embedding = model.encode(text, convert_to_tensor=False).tolist()
+    
+    # Convert the embedding to the expected format
+    embedding_str = "[" + ",".join(map(str, embedding)) + "]"
+    return embedding_str
+
+def solr_knn_query(endpoint, collection, embedding):
+    url = f"{endpoint}/{collection}/select"
+
+    data = {
+        "q": f"{{!knn f=vector topK=10}}{embedding}",
+        "fl": "id,title,score",
+        "rows": 10,
+        "wt": "json"
+    }
+    
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    
+    response = requests.post(url, data=data, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+def display_results(results):
+    docs = results.get("response", {}).get("docs", [])
+    if not docs:
+        print("No results found.")
+        return
+
+    for doc in docs:
+        print(f"* {doc.get('id')} {doc.get('title')} [score: {doc.get('score'):.2f}]")
+
+def main():
+    solr_endpoint = 'http://localhost:8983/solr/games/select?'
+    collection = "games"
+    
+    query_text = '${this.$data['query']}'
+    embedding = text_to_embedding(query_text)
+
+    try:
+        results = solr_knn_query(solr_endpoint, collection, embedding)
+        return results;
+    except requests.HTTPError as e:
+        print(f"Error {e.response.status_code}: {e.response.text}")
+
+if __name__ == "__main__":
+    main()
+      `;
+
+      // Run the Python script using Brython
+      __BRYTHON__.run_script(pythonScript);
+    },
+  },
+  mounted() {
+    // Initialize Brython when the component is mounted
+    this.initializeBrython();
   },
 };
 </script>
